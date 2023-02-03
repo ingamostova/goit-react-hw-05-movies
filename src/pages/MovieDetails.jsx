@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { getMovieById } from 'api';
 import { useEffect } from 'react';
 import { useState } from 'react';
