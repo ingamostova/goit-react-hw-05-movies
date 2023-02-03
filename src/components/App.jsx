@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 import { Home } from 'pages/Home';
