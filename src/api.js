@@ -23,3 +23,17 @@ export async function getMovieById(movieId) {
     )
     return response.data;
 }
+
+export async function getCast(id) {
+    const response = await axios.get(
+        `${BASE_URL}movie/${id}/credits?api_key=${API_KEY}`
+    )
+    return response.data.cast;
+}
+
+export async function getReviews(id) {
+    const response = await axios.get(
+        `${BASE_URL}movie/${id}/reviews?api_key=${API_KEY}`
+    )
+    return response.data.results;
+}

@@ -1,20 +1,21 @@
-/* eslint-disable no-unused-vars */
-import { Searchbox } from 'components/Searchbox';
+import { Searchbox } from 'components/Searchbox/Searchbox';
 import { useState, useEffect } from 'react';
 import { getMoviesBySearch } from 'api';
-import { MovieList } from 'components/MovieList';
+import { MovieList } from 'components/MovieList/MovieList';
+import { useSearchParams } from 'react-router-dom';
 
 export const Movies = () => {
   const [searchQuery, setSearchQuery] = useState(null);
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
-
-  const handleSubmit = query => {
-    setSearchQuery(query);
-  };
+  const [searchParams, setSearchParams] = useSearchParams();
+  // eslint-disable-next-line no-unused-vars
+  const query = searchParams.get('query');
 
   useEffect(() => {
     async function fetchMoviesBySearch(query) {
+      setMovies([]);
+      setError(null);
       try {
         if (query === null) {
           return;
@@ -37,9 +38,15 @@ export const Movies = () => {
     fetchMoviesBySearch(searchQuery);
   }, [searchQuery]);
 
+  const handleSubmit = query => {
+    setSearchQuery(query);
+    setSearchParams({ query });
+  };
+
   return (
     <main>
       <Searchbox onSubmit={handleSubmit} />
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <MovieList movies={movies} />
     </main>
   );
