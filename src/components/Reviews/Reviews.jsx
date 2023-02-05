@@ -40,10 +40,10 @@ const Reviews = () => {
         <>
           <Title>REVIEWS</Title>
           <List>
-            {reviews.map(review => (
-              <Item key={review.id}>
-                <Author>{review.author}</Author>
-                <p>{review.content}</p>
+            {reviews.map(({ id, author, content }) => (
+              <Item key={id}>
+                <Author>{author}</Author>
+                <p>{content}</p>
               </Item>
             ))}
           </List>

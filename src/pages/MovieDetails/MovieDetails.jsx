@@ -41,6 +41,8 @@ const MovieDetails = () => {
     fetchMovie(movieId);
   }, [movieId]);
 
+  const { poster_path, title, genres, overview } = movie;
+
   return (
     <>
       {!isLoading && (
@@ -52,21 +54,21 @@ const MovieDetails = () => {
           <Wrapper>
             <Image
               src={
-                movie.poster_path === null
+                poster_path === null
                   ? `https://media.istockphoto.com/id/1216251206/vector/no-image-available-icon.jpg?s=612x612&w=0&k=20&c=6C0wzKp_NZgexxoECc8HD4jRpXATfcu__peSYecAwt0=`
-                  : `https://image.tmdb.org/t/p/w342/${movie.poster_path}`
+                  : `https://image.tmdb.org/t/p/w342/${poster_path}`
               }
-              alt={movie.title}
+              alt={title}
             />
             <Info>
-              <Name>{movie.title}</Name>
+              <Name>{title}</Name>
               <Genres>
                 Genres:{' '}
-                {movie.genres?.length > 0
-                  ? movie.genres.map(genre => genre.name).join(', ')
+                {genres?.length > 0
+                  ? genres.map(genre => genre.name).join(', ')
                   : '-'}
               </Genres>
-              <p>{movie.overview}</p>
+              <p>{overview}</p>
               <List>
                 <li>
                   <Link to="cast" state={{ from: backLink }}>
