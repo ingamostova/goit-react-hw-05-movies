@@ -33,3 +33,22 @@ export const ActorInfo = styled.p`
   display: flex;
   gap: 5px;
 `;
+
+export const Notification = styled.p`
+  color: black;
+  font-size: 20px;
+  margin-top: 16px;
+  text-align: center;
+`;
+
+export const Error = styled.p`
+  color: red;
+  font-size: 20px;
+  margin-top: 16px;
+`;
+
+export const Layout = styled.div`
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+`;

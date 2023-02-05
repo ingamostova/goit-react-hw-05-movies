@@ -1,4 +1,4 @@
-import { getReviews } from 'api';
+import { getReviews } from 'services/api';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -8,20 +8,26 @@ import {
   Author,
   Error,
   Notification,
+  Layout,
 } from './Reviews.styled';
+import { RotatingLines } from 'react-loader-spinner';
 
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
 
   useEffect(() => {
     async function fetchReviews(id) {
+      setIsLoading(true);
       try {
         const data = await getReviews(id);
         setReviews(data);
       } catch (error) {
         setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -30,7 +36,7 @@ export const Reviews = () => {
 
   return (
     <>
-      {reviews.length > 0 ? (
+      {reviews.length > 0 && !isLoading && (
         <>
           <Title>REVIEWS</Title>
           <List>
@@ -42,10 +48,21 @@ export const Reviews = () => {
             ))}
           </List>
         </>
-      ) : (
+      )}
+
+      {isLoading && (
+        <Layout>
+          <RotatingLines strokeColor="grey" strokeWidth="3" width="32" />
+        </Layout>
+      )}
+
+      {!reviews.length && !isLoading && !error && (
         <Notification>There is no revie</Notification>
       )}
+
       {error && <Error>{error}</Error>}
     </>
   );
 };
+
+export default Reviews;

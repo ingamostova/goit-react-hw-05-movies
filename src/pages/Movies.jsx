@@ -1,21 +1,22 @@
 import { Searchbox } from 'components/Searchbox/Searchbox';
 import { useState, useEffect } from 'react';
-import { getMoviesBySearch } from 'api';
+import { getMoviesBySearch } from 'services/api';
 import { MovieList } from 'components/MovieList/MovieList';
 import { useSearchParams } from 'react-router-dom';
+import { RotatingLines } from 'react-loader-spinner';
 
-export const Movies = () => {
-  const [searchQuery, setSearchQuery] = useState(null);
+const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  // eslint-disable-next-line no-unused-vars
-  const query = searchParams.get('query');
+  const [isLoading, setIsLoading] = useState(false);
+  const movieName = searchParams.get('query');
 
   useEffect(() => {
     async function fetchMoviesBySearch(query) {
       setMovies([]);
       setError(null);
+      setIsLoading(true);
       try {
         if (query === null) {
           return;
@@ -32,22 +33,36 @@ export const Movies = () => {
         setMovies(data);
       } catch (error) {
         setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
     }
 
-    fetchMoviesBySearch(searchQuery);
-  }, [searchQuery]);
+    fetchMoviesBySearch(movieName);
+  }, [movieName]);
 
   const handleSubmit = query => {
-    setSearchQuery(query);
     setSearchParams({ query });
   };
 
   return (
     <main>
       <Searchbox onSubmit={handleSubmit} />
+      {isLoading && (
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: '16px',
+            marginBottom: '16px',
+          }}
+        >
+          <RotatingLines strokeColor="grey" strokeWidth="3" width="77" />
+        </div>
+      )}
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <MovieList movies={movies} />
+      {!isLoading && <MovieList movies={movies} />}
     </main>
   );
 };
+
+export default Movies;

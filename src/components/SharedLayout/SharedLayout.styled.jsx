@@ -32,3 +32,9 @@ export const Link = styled(NavLink)`
     background-color: #0088ff;
   }
 `;
+
+export const Layout = styled.div`
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+`;

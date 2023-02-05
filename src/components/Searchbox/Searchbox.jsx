@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Input, Form, Btn } from './Searchbox.styled';
 import { BsSearch } from 'react-icons/bs';
 
@@ -26,4 +27,8 @@ export const Searchbox = ({ onSubmit }) => {
       </Form>
     </div>
   );
+};
+
+Searchbox.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };
