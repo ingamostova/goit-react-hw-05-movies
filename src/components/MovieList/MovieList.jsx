@@ -7,18 +7,18 @@ export const MovieList = ({ movies }) => {
 
   return (
     <List>
-      {movies.map(({ id, poster_path, title }) => (
+      {movies.map(({ id, poster_path, title, name }) => (
         <Item key={id}>
           <Link to={`/movies/${id}`} state={{ from: location }}>
             <Image
               src={
-                poster_path === null
-                  ? `https://media.istockphoto.com/id/1216251206/vector/no-image-available-icon.jpg?s=612x612&w=0&k=20&c=6C0wzKp_NZgexxoECc8HD4jRpXATfcu__peSYecAwt0=`
-                  : `https://image.tmdb.org/t/p/w342/${poster_path}`
+                poster_path
+                  ? `https://image.tmdb.org/t/p/w342/${poster_path}`
+                  : `https://media.istockphoto.com/id/1216251206/vector/no-image-available-icon.jpg?s=612x612&w=0&k=20&c=6C0wzKp_NZgexxoECc8HD4jRpXATfcu__peSYecAwt0=`
               }
               alt={title}
             />
-            <Title>{title}</Title>
+            <Title>{title || name}</Title>
           </Link>
         </Item>
       ))}
@@ -30,8 +30,9 @@ MovieList.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      poster_path: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
+      poster_path: PropTypes.string,
+      title: PropTypes.string,
+      name: PropTypes.string,
     })
   ),
 };

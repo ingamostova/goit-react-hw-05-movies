@@ -43,15 +43,15 @@ const Cast = () => {
         <>
           <ActorsTitle>ACTORS</ActorsTitle>
           <List>
-            {cast.map(({ id, profile_path, name, character }) => (
-              <Item key={id}>
+            {cast.map(({ cast_id, profile_path, name, character }) => (
+              <Item key={cast_id}>
                 <Image
                   src={
-                    profile_path === null
-                      ? `https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png`
-                      : `https://image.tmdb.org/t/p/w185/${profile_path}`
+                    profile_path
+                      ? `https://image.tmdb.org/t/p/w185/${profile_path}`
+                      : `https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png`
                   }
-                  alt=""
+                  alt={name}
                 />
                 <ActorInfo>
                   <BsPersonCircle />
